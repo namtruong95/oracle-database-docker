@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  database:
+    build: ./oracle-db-12.2.0.1-ee
+    volumes:
+      - ./oradata:/opt/oracle/oradata # persistent oracle database data.
+    ports:
+      - 1521:1521
+      - 8080:8080
+      - 5500:5500
+    shm_size: 1g
+    environment:
+      - ORACLE_PWD=nam1
+    restart: unless-stopped
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: "bridge"
